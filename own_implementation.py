@@ -50,23 +50,22 @@ def sum_test(data):
     return z_stat, p_value
 
 def d2_test(data):
-
-    data = np.asarray(data)
-    if np.any(data < 0) or np.any(data > 1):
-        raise ValueError("All data points must be in range [0,1]")
-
     if len(data) % 2 != 0:
         data = data[:-1]
-
-    x = np.array(data[0::2])
+    
+    x = np.array(data[::2])
     y = np.array(data[1::2])
 
-    distances = (x - 0.5)**2 + (y - 0.5)**2
-    mean_distance = np.mean(distances) 
+    distances_sq = (x - 0.5)**2 + (y - 0.5)**2
+    mean_d2 = np.mean(distances_sq)
 
-    z = (mean_distance - 0.5) / (1 / math.sqrt(len(distances)))
-    p_value = 2 * stats.norm.sf(np.abs(z))
-    return mean_distance, p_value
+    expected = 1/6  
+    var = 1/(180 * len(distances_sq))  
+
+    z_score = (mean_d2 - expected) / math.sqrt(var)
+    p_value = 2 * (1 - stats.norm.cdf(abs(z_score)))
+
+    return mean_d2, p_value
 
 
 def collision_test(data, m=1000):
