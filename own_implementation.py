@@ -83,3 +83,24 @@ def collision_test(data, m=1000):
     expected_collisions = m * (1 - ((1 - 1/m)**n + (n/m) * (1 - 1/m)**(n-1)))
 
     return collisions, expected_collisions
+
+def runs_test(data):
+    
+    median = np.median(data)
+    signs = [1 if x > median else 0 for x in data]
+
+    runs = 1
+    for i in range(1, len(signs)):
+        if signs[i] != signs[i-1]:
+            runs += 1
+
+    n1 = np.sum(signs)
+    n2 = len(signs) - n1
+
+    expected_runs = ((2 * n1 * n2) / (n1 + n2)) + 1
+    variance_runs = (2 * n1 * n2 * (2 * n1 * n2 - n1 - n2)) / (((n1 + n2)**2) * (n1 + n2 - 1))
+
+    z_stat = (runs - expected_runs) / np.sqrt(variance_runs)
+    p_value = 2 * (1 - stats.norm.cdf(abs(z_stat)))
+
+    return z, p_value
