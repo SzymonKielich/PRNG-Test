@@ -125,3 +125,9 @@ def monobit_test(data):
     p_value = 2 * (1 - stats.norm.cdf(z_stat))  # todo checc
 
     return z_stat, p_value, ones, zeros
+
+def entropy_test(data, buckets=20):
+    hist, _ = np.histogram(data, bins=buckets, range=(0, 1), density=False)
+    probs = hist / np.sum(hist)
+    probs = probs[probs > 0]  
+    return -np.sum(probs * np.log2(probs))
