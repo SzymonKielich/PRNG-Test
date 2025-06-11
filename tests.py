@@ -122,7 +122,7 @@ def monobit_test(data):
     n = len(bitstring)
 
     z_stat = abs(ones - zeros) / np.sqrt(n)
-    p_value = 2 * (1 - stats.norm.cdf(z_stat))  # todo checc
+    p_value = 2 * (1 - stats.norm.cdf(z_stat))  
 
     return z_stat, p_value, ones, zeros
 

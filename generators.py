@@ -50,9 +50,3 @@ def xorshift(n, seed=None):
         results.append(state / (mask + 1))
     return results
 
-# def save_as_binary(data, filename="rng_output.bin"):
-#     """Save random numbers as raw 32-bit floats for PractRand."""
-#     with open(filename, "wb") as f:
-#         for num in data:
-#             f.write(struct.pack('f', num))
-#     print(f"Saved binary data to {filename}")
